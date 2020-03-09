@@ -20,20 +20,16 @@ export class TodoListComponent implements OnInit {
     this.todoService.getTodos().subscribe(todos => this.todoList = todos);
   }
 
-  createTodo(): void {
+  openTodoDialog(mode: string, todo?: TODO): void { // mode = 'create' | 'update'
     const dialogRef = this.dialog.open(TodoDialog, {
       width: '800px',
-      data: { mode: 'create' }
+      data: { mode: mode, todos: todo ? [todo] : [] }
     });
-    dialogRef.afterClosed().subscribe((result: TODO) => {});
-  }
-
-  updateTodo(todo: TODO) {
-    const dialogRef = this.dialog.open(TodoDialog, {
-      width: '800px',
-      data: { todo: todo, mode: 'update' }
+    dialogRef.afterClosed().subscribe((result: TODO[]) => {
+      if (result) {
+        this.todoService.updateTodoList(result, mode);
+      }
     });
-    dialogRef.afterClosed().subscribe((result: TODO) => {});
   }
 
   deleteTodo(id: number) {

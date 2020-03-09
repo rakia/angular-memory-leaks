@@ -24,13 +24,17 @@ export class TodoService {
     return of(this.types);
   }
 
-  updateTodoList(todo: TODO, mode: string) {
-    if (mode === 'create') {
-      todo.id = this.todoList.length + 1;
-      this.todoList.push(todo);
-    }
+  updateTodoList(todos: TODO[], mode: string) {
+    // if the todo-dialog is opened with 'update' mode, it will contain only 1 TODO
     if (mode === 'update') {
-      this.todoList[todo.id - 1] = todo;
+      this.todoList[todos[0].id - 1] = todos[0];
+    }
+
+    if (mode === 'create') {
+      todos.forEach(todo => {
+        todo.id = this.todoList.length + 1;
+        this.todoList.push(todo);
+      });
     }
   }
 

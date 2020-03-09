@@ -1,43 +1,55 @@
 <h1 mat-dialog-title>Create new TODO(s)</h1>
 
 <div mat-dialog-content>
-<!--  <div fxLayout="row" fxLayoutWrap fxLayoutGap="10px">-->
-  <form [formGroup]="todoForm">
-    <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input formControlName="name" matInput required/>
-    </mat-form-field>
+  <div fxLayout="row" fxLayoutWrap fxLayoutGap="10px">
 
-    <mat-form-field>
-      <mat-label>Select a type</mat-label>
-      <mat-select formControlName="type" required>
-        <mat-option *ngFor="let typeTodo of types" [value]="typeTodo">{{typeTodo}}</mat-option>
-      </mat-select>
-      <!--mat-error *ngIf="type.hasError('required')">Please choose a type</mat-error-->
-    </mat-form-field>
+  <form [formGroup]="todosForm">
+    <div formArrayName="todos" *ngFor="let item of todosFormArray.controls; let i = index;">
 
-    <mat-form-field>
-      <mat-label>Depends on</mat-label>
-      <mat-select formControlName="dependencies">
-        <mat-option *ngFor="let todo of filteredTodoList" [value]="todo">{{todo.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <div fxLayout="row" [formGroupName]="i" fxLayoutAlign="start center">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input formControlName="name" matInput required/>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Description</mat-label>
-      <textarea formControlName="description" matInput></textarea>
-    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select a type</mat-label>
+          <mat-select formControlName="type" required>
+            <mat-option *ngFor="let typeTodo of types" [value]="typeTodo">{{typeTodo}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Depends on</mat-label>
+          <mat-select formControlName="dependencies">
+            <mat-option *ngFor="let todo of filteredTodoList" [value]="todo">{{todo.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea formControlName="description" matInput></textarea>
+        </mat-form-field>
+
+        <div *ngIf="mode === 'create' && todosFormArray.length > 1">
+          <button mat-icon-button color="primary" (click)="deleteTodoForm(i)" matTooltip="Delete TODO">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+      </div>
+
+    </div>
   </form>
-<!--  </div>-->
+  </div>
 
-<!--  <div fxLayout="row" fxLayoutAlign="end center">-->
-<!--    <button mat-icon-button color="primary" (click)="addTodo()" matTooltip="Add TODO">-->
-<!--      <i class="material-icons">add_circle</i>-->
-<!--    </button>-->
-<!--  </div>-->
+  <div *ngIf="mode === 'create'" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-icon-button color="primary" (click)="addTodo()" matTooltip="Add TODO">
+      <i class="material-icons">add_circle</i>
+    </button>
+  </div>
 </div>
 
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]>Cancel</button>
-  <button mat-button (click)="save()" [disabled]="todoForm.invalid">Save</button> <!-- cdkFocusInitial -->
+  <button mat-button (click)="save()" [disabled]="todosForm.invalid">Save</button>
 </div>

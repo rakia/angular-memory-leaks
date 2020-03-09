@@ -21,7 +21,7 @@
           </div>
 
           <div>
-            <button mat-icon-button color="primary" (click)="updateTodo(todo)" matTooltip="Edit TODO">
+            <button mat-icon-button color="primary" (click)="openTodoDialog('update', todo)" matTooltip="Update TODO">
               <i class="material-icons">edit</i>
             </button>
             <button mat-icon-button color="primary" (click)="deleteTodo(todo.id)" matTooltip="Delete TODO">
@@ -35,7 +35,7 @@
   </div>
 
   <div fxLayout="row" fxLayoutAlign="end center">
-    <button mat-icon-button color="primary" (click)="createTodo()" matTooltip="Add TODO">
+    <button mat-icon-button color="primary" (click)="openTodoDialog('create')" matTooltip="Create TODO">
       <i class="material-icons">add_circle</i>
     </button>
   </div>

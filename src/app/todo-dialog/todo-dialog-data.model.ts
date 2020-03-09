@@ -1,6 +1,6 @@
 import {TODO} from '../todo.model';
 
 export interface TodoDialogData {
-  todo?: TODO;
+  todos?: TODO[];
   mode: string; // 'create' | 'update'
 }
