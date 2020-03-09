@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Create new TODO</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="todoForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input formControlName="name" matInput required/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select a type</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option *ngFor="let typeTodo of types" [value]="typeTodo">{{typeTodo}}</mat-option>
+      </mat-select>
+      <!--mat-error *ngIf="type.hasError('required')">Please choose a type</mat-error-->
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Depends on</mat-label>
+      <mat-select formControlName="dependencies">
+        <mat-option *ngFor="let todo of todoList" [value]="todo">{{todo.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" matInput></textarea>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]>Cancel</button>
+  <button mat-button (click)="save()" cdkFocusInitial disabled="todoForm.invalid">Save</button>
+</div>

@@ -1,0 +1,7 @@
+#todo-list {
+  margin: 10px;
+
+  .dependencies {
+    color: rgba(0,0,0,.54);
+  }
+}

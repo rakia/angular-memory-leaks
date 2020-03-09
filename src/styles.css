@@ -1,0 +1,14 @@
+/* Global Styles */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+  font-family: 'Roboto', Arial, sans-serif;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
