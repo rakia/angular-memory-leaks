@@ -22,7 +22,7 @@ export class TodoListComponent implements OnInit {
 
   createTodo(): void {
     const dialogRef = this.dialog.open(TodoDialog, {
-      width: '300px',
+      width: '800px',
       data: { mode: 'create' }
     });
     dialogRef.afterClosed().subscribe((result: TODO) => {});
@@ -30,7 +30,7 @@ export class TodoListComponent implements OnInit {
 
   updateTodo(todo: TODO) {
     const dialogRef = this.dialog.open(TodoDialog, {
-      width: '300px',
+      width: '800px',
       data: { todo: todo, mode: 'update' }
     });
     dialogRef.afterClosed().subscribe((result: TODO) => {});

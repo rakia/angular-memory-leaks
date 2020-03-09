@@ -13,12 +13,13 @@ import {TodoService} from '../todo.service';
 export class TodoDialog implements OnInit {
 
   todoForm:         FormGroup;
-  name:         string;
-  type:         string;
-  dependencies: TODO;
-  description:  string;
-  types: string[]  = [];
-  todoList: TODO[] = [];
+  name:             string;
+  type:             string;
+  dependencies:     TODO;
+  description:      string;
+  types:            string[] = [];
+  todoList:         TODO[]   = [];
+  filteredTodoList: TODO[]   = [];
 
   constructor(private formBuilder: FormBuilder,
               public todoService: TodoService,
@@ -27,7 +28,10 @@ export class TodoDialog implements OnInit {
   }
 
   ngOnInit() {
-    this.todoService.getTodos().subscribe(todos => this.todoList = todos);
+    this.todoService.getTodos().subscribe(todos => {
+      this.todoList         = todos;
+      this.filteredTodoList = this.todoList;
+    });
     this.todoService.getTypes().subscribe(types => this.types = types);
 
     this.todoForm = this.formBuilder.group({
@@ -38,9 +42,13 @@ export class TodoDialog implements OnInit {
       description:  [this.data.todo?.description , []]
     });
 
+    this.todoForm.valueChanges.subscribe(value => {
+      console.log('form value changed');
+    });
+
     this.todoForm.get('type').valueChanges.subscribe(selectedType => {
       console.log('type changed');
-      this.todoList.filter(todo => {
+      this.filteredTodoList = this.todoList.filter(todo => {
         if (selectedType === 'Reading' || selectedType === 'Coding') {
           return todo.type !== 'Writing';
         } else {
