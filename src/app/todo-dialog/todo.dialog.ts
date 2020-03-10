@@ -1,6 +1,8 @@
-import { Component, Inject, OnInit                     } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit          } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef                 } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject, Subscription                         } from 'rxjs';
+import { takeUntil                                     } from 'rxjs/operators';
 
 import { TODO           } from '../todo.model';
 import { TodoDialogData } from './todo-dialog-data.model';
@@ -11,7 +13,7 @@ import { TodoService    } from '../todo.service';
   templateUrl: 'todo.dialog.html',
   styleUrls: ['./todo.dialog.css']
 })
-export class TodoDialog implements OnInit {
+export class TodoDialog implements OnInit, OnDestroy {
 
   todosForm:        FormGroup;
   type:             string;
@@ -19,6 +21,10 @@ export class TodoDialog implements OnInit {
   todoList:         TODO[]   = [];
   filteredTodoList: TODO[]   = []; // { coding: [], reading: [], writing: [] };
   mode:             string   = 'create'; // 'create' | 'update'
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
+  formChangesUnsubscriptions: Subscription[] = [];
+  typeChangesUnsubscriptions: Subscription[] = [];
 
   constructor(private formBuilder: FormBuilder,
               public todoService: TodoService,
@@ -33,11 +39,11 @@ export class TodoDialog implements OnInit {
   ngOnInit() {
     this.mode = this.data.mode;
 
-    this.todoService.getTodos().subscribe(todos => {
+    this.todoService.getTodos().pipe(takeUntil(this.destroy$)).subscribe(todos => {
       this.todoList         = todos;
       this.filteredTodoList = this.todoList;
     });
-    this.todoService.getTypes().subscribe(types => this.types = types);
+    this.todoService.getTypes().pipe(takeUntil(this.destroy$)).subscribe(types => this.types = types);
 
     const index     = 0;
     const formGroup = this.createTodoForm(this.data.todos[0], index);
@@ -61,10 +67,10 @@ export class TodoDialog implements OnInit {
       dependencies: [todo?.dependencies, []],
       description:  [todo?.description , []]
     });
-    formGroup.valueChanges.subscribe(value => {
+    this.formChangesUnsubscriptions[index] = formGroup.valueChanges.subscribe(value => {
       console.log('form ' + index + ': value changed');
     });
-    formGroup.get('type').valueChanges.subscribe(selectedType => {
+    this.typeChangesUnsubscriptions[index] = formGroup.get('type').valueChanges.subscribe(selectedType => {
       console.log('form ' + index + ': type changed to: ' + selectedType);
       this.filteredTodoList = this.filterTodoListPerType(selectedType);
     });
@@ -81,11 +87,23 @@ export class TodoDialog implements OnInit {
     });
   }
 
-  deleteTodoForm(index: number) {
-    this.todosFormArray.removeAt(index);
+  deleteTodoForm(formIndex: number) {
+    this.formChangesUnsubscriptions[formIndex].unsubscribe();
+    this.typeChangesUnsubscriptions[formIndex].unsubscribe();
+    this.todosFormArray.removeAt(formIndex);
+    this.todosFormArray.controls.forEach((formGroup, index) => {
+      formGroup.get('index').setValue(index, {onlySelf: true, emitEvent: false});
+    });
   }
 
   save(): void {
     this.dialogRef.close(this.todosFormArray.value);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+    this.formChangesUnsubscriptions.forEach(value => value.unsubscribe());
+    this.typeChangesUnsubscriptions.forEach(value => value.unsubscribe());
   }
 }

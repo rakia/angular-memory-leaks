@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog         } from '@angular/material/dialog';
+import { Subject           } from 'rxjs';
+import { takeUntil         } from 'rxjs/operators';
 
 import { TODO              } from '../todo.model';
 import { TodoDialog        } from '../todo-dialog/todo.dialog';
@@ -10,14 +12,15 @@ import { TodoService       } from '../todo.service';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css']
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent implements OnInit, OnDestroy {
 
   todoList: TODO[];
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(public dialog: MatDialog, public todoService: TodoService) {}
 
   ngOnInit() {
-    this.todoService.getTodos().subscribe(todos => this.todoList = todos);
+    this.todoService.getTodos().pipe(takeUntil(this.destroy$)).subscribe(todos => this.todoList = todos);
   }
 
   openTodoDialog(mode: string, todo?: TODO): void { // mode = 'create' | 'update'
@@ -34,5 +37,10 @@ export class TodoListComponent implements OnInit {
 
   deleteTodo(id: number) {
     this.todoService.deleteTodo(id);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }
