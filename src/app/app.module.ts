@@ -18,9 +18,10 @@ import { AppComponent            } from './app.component';
 import { TopBarComponent         } from './top-bar/top-bar.component';
 import { TodoListComponent       } from './todo-list/todo-list.component';
 import { TodoDialog              } from './todo-dialog/todo.dialog';
+import { FilterPerTypePipe       } from './filter-per-type.pipe';
 
 @NgModule({
-  declarations: [ AppComponent, TopBarComponent, TodoListComponent, TodoDialog ],
+  declarations: [ AppComponent, TopBarComponent, TodoListComponent, TodoDialog, FilterPerTypePipe ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

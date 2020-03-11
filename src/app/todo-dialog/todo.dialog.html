@@ -22,7 +22,9 @@
         <mat-form-field>
           <mat-label>Depends on</mat-label>
           <mat-select formControlName="dependencies">
-            <mat-option *ngFor="let todo of filteredTodoList" [value]="todo">{{todo.name}}</mat-option>
+            <mat-option *ngFor="let todo of (dependencies | filterPerType: item.get('type').value)" [value]="todo">
+              {{todo.name}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
