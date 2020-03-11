@@ -1,3 +1,11 @@
+# Build Me an Angular App… with Memory Leaks Please!
+
+##Finding memory leaks with chrome Dev Tools
+
+The tutorial for this Angular 9 application is available here:
+https://medium.com/@rakia/build-me-an-angular-app-with-memory-leaks-please-36302184e658
+
+
 # AngularMemoryLeaks
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.4.
