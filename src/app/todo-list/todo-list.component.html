@@ -1,8 +1,8 @@
-<div id="todo-list">
+<div class="todo-list">
 
-  <div fxLayout="row" fxLayoutWrap fxLayoutGap="10px">
+  <div fxLayout="row wrap" fxLayoutGap="10px">
 
-    <mat-card *ngFor="let todo of todoList" fxFlex.lg="33" fxFlex.lt-lg="50" fxFlex.xs="100" [class.mat-elevation-z8]>
+    <mat-card class="todo-card" *ngFor="let todo of todoList" fxFlex [class.mat-elevation-z8]>
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{todo.id}} - {{todo.name}}</mat-card-title>

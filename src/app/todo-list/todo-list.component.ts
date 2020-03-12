@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog         } from '@angular/material/dialog';
 import { Subject           } from 'rxjs';
 import { takeUntil         } from 'rxjs/operators';
@@ -10,8 +10,7 @@ import { TodoService       } from '../todo.service';
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit, OnDestroy {
 
