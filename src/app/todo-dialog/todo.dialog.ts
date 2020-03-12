@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit          } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef                 } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { Subject        } from 'rxjs';
@@ -11,7 +11,8 @@ import { TodoDialogData } from './todo-dialog-data.model';
 @Component({
   selector: 'todo.dialog',
   templateUrl: 'todo.dialog.html',
-  styleUrls: ['./todo.dialog.css']
+  styleUrls: ['./todo.dialog.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoDialog implements OnInit, OnDestroy {
 
