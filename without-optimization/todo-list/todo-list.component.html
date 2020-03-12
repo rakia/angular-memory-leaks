@@ -1,0 +1,42 @@
+<div class="todo-list">
+
+  <div fxLayout="row wrap" fxLayoutGap="10px">
+
+    <mat-card class="todo-card" *ngFor="let todo of todoList" fxFlex [class.mat-elevation-z8]>
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{todo.id}} - {{todo.name}}</mat-card-title>
+        <mat-card-subtitle>Type: {{todo.type}}</mat-card-subtitle>
+      </mat-card-header>
+      <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
+      <mat-card-content>
+        <p>{{todo.description}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <div fxLayoutAlign="space-between">
+          <div *ngIf="!todo.dependencies"></div>
+          <div *ngIf="todo.dependencies" class="dependencies" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="end center">
+            <i class="material-icons">all_inclusive</i>
+            <div>{{todo.dependencies.name}}</div>
+          </div>
+
+          <div>
+            <button mat-icon-button color="primary" (click)="openTodoDialog('update', todo)" matTooltip="Update TODO">
+              <i class="material-icons">edit</i>
+            </button>
+            <button mat-icon-button color="primary" (click)="deleteTodo(todo.id)" matTooltip="Delete TODO">
+              <i class="material-icons">delete_outline</i>
+            </button>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-icon-button color="primary" (click)="openTodoDialog('create')" matTooltip="Create TODO">
+      <i class="material-icons">add_circle</i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.todo-list {
+  margin: 10px;
+}
+
+.todo-card {
+  min-width: 300px;
+  max-width: 300px;
+  margin-bottom: 15px;
+}
+
+.dependencies {
+  color: rgba(0,0,0,.54);
+}
