@@ -2,8 +2,7 @@
 
 ##Finding memory leaks with chrome Dev Tools
 
-The tutorial for this Angular 9 application is available here:
-https://medium.com/@rakia/build-me-an-angular-app-with-memory-leaks-please-36302184e658
+The tutorial for this Angular 9 application is available here: https://medium.com/better-programming/build-me-an-angular-app-with-memory-leaks-please-36302184e658
 
 
 # AngularMemoryLeaks
