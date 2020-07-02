@@ -1,10 +1,10 @@
-# Build Me an Angular App… with Memory Leaks Please!
+# How to Create and Fix Memory Leaks With Chrome DevTools
 
 ##Finding memory leaks with chrome Dev Tools
 
 The tutorial for this Angular 9 application is available here:
 
-### How to Create and Fix Memory Leaks With Chrome DevTools
+### Build Me an Angular App… with Memory Leaks Please!
 https://medium.com/better-programming/build-me-an-angular-app-with-memory-leaks-please-36302184e658
 
 
