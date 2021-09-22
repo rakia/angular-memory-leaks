@@ -1,3 +1,8 @@
+💡 🧠 Join my free email newsletter about engineering, technology, and leadership: https://rakiabensassi.substack.com
+
+You can follow me and find more of my articles here: https://rakiabensassi.medium.com/
+And if you would like to support me, you can sign up here: https://rakiabensassi.medium.com/membership
+
 # How to Create and Fix Memory Leaks With Chrome DevTools
 
 ## Finding memory leaks with chrome Dev Tools
